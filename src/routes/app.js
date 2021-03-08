@@ -2,16 +2,16 @@
 // REQUIRES
 // ==========================================
 const express = require('express')
-const userController = require('../controllers/users')
+const appController = require('../controllers/app')
 
 // ==========================================
 // INIT
 // ==========================================
-const users = express.Router()
+const app = express.Router()
 
 // ==========================================
 // APIS
 // ==========================================
-users.get('/', userController.get)
+app.get('/', appController.get)
 
-module.exports = users
+module.exports = app
