@@ -14,8 +14,8 @@ const users = express.Router()
 // ==========================================
 users.get('/', userController.readUsers)
 users.post('/new', userController.createUser)
-users.get('/:id', userController.readUser)
-users.put('/:id', userController.updateUser)
-users.delete('/:id', userController.deleteUser)
+users.get('/:dni', userController.readUser)
+users.put('/:dni', userController.updateUser)
+users.delete('/:dni', userController.deleteUser)
 
 module.exports = users

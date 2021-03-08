@@ -1,9 +1,24 @@
+const usersFakeRepository = require('../users.json')
+const fakeRepository = require('../utils/fakeRepository')
+
 const readUsers = (req, res) => {
-  res.send('Read all users')
+  res.send(usersFakeRepository)
 }
 
 const createUser = (req, res) => {
-  res.send('Create user')
+  const name = req.body.name
+  const age = req.body.age
+  const dni = req.body.dni
+
+  usersFakeRepository.users.push({
+    dni,
+    name,
+    age,
+  })
+
+  fakeRepository.saveUsersToFakeRepository(usersFakeRepository)
+
+  res.send(usersFakeRepository)
 }
 
 const readUser = (req, res) => {
