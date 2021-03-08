@@ -10,8 +10,12 @@ const userController = require('../controllers/users')
 const users = express.Router()
 
 // ==========================================
-// APIS
+// ENDPOINTS
 // ==========================================
-users.get('/', userController.get)
+users.get('/', userController.readUsers)
+users.post('/new', userController.createUser)
+users.get('/:id', userController.readUser)
+users.put('/:id', userController.updateUser)
+users.delete('/:id', userController.deleteUser)
 
 module.exports = users

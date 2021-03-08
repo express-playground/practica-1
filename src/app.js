@@ -25,9 +25,9 @@ app.set('port', 4500)
 // ==========================================
 // ROUTES
 // ==========================================
-app.use('/users', routes.userRoutes)
+app.use('/api/users', routes.userRoutes)
 
-app.use('/', routes.appRoutes)
+app.use('/api', routes.appRoutes)
 
 // ==========================================
 // LISTENER

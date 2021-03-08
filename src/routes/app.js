@@ -10,7 +10,7 @@ const appController = require('../controllers/app')
 const app = express.Router()
 
 // ==========================================
-// APIS
+// ENDPOINTS
 // ==========================================
 app.get('/', appController.get)
 
