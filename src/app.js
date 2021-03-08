@@ -30,7 +30,6 @@ app.use(bodyParser.json())
 // ROUTES
 // ==========================================
 app.use('/api/users', routes.userRoutes)
-
 app.use('/api', routes.appRoutes)
 
 // ==========================================

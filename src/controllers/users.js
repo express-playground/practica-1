@@ -6,34 +6,55 @@ const readUsers = (req, res) => {
 }
 
 const createUser = (req, res) => {
-  const name = req.body.name
-  const age = req.body.age
-  const dni = req.body.dni
+  const userName = req.body.name
+  const userAge = req.body.age
+  const userDni = req.body.dni
 
   usersFakeRepository.users.push({
-    dni,
-    name,
-    age,
+    userDni,
+    userName,
+    userAge,
   })
 
   fakeRepository.saveUsersToFakeRepository(usersFakeRepository)
-
   res.send(usersFakeRepository)
 }
 
 const readUser = (req, res) => {
-  const userId = req.params.id
-  res.send('Read user ' + userId)
+  const userDni = req.params.dni
+
+  const chosenUser = usersFakeRepository.users.find(element => element.dni === userDni)
+  res.send(chosenUser)
 }
 
 const updateUser = (req, res) => {
-  const userId = req.params.id
-  res.send('Update user ' + userId)
+  const userDni = req.params.id
+
+  const userNewName = req.body.name
+  const userName = req.body.name
+  const userAge = req.body.age
+
+  const idx = usersFakeRepository.users.findIndex(element => element.dni === userDni)
+
+  idx.name = userName
+  idx.age = userAge
+  idx.userDni = userNewName
+
+  fakeRepository.saveUsersToFakeRepository(usersFakeRepository)
+  res.send(usersFakeRepository)
 }
 
 const deleteUser = (req, res) => {
-  const userId = req.params.id
-  res.send('Delete user ' + userId)
+  const userDni = req.params.id
+
+  const idx = usersFakeRepository.users.findIndex(element => element.dni === userDni)
+
+  if (idx >= 0) {
+    usersFakeRepository.users.splice(idx, 1)
+    fakeRepository.saveUsersToFakeRepository(usersFakeRepository)
+  }
+
+  res.send(usersFakeRepository)
 }
 
 module.exports = {

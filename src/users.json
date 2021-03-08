@@ -1,1 +1,5 @@
-{"users":[{"dni":"EEE85a2","name":"Alejandro","age":30},{"dni":"AGH01d0","name":"Marta","age":23},{"dni":"aaaaa0000","name":"Franklin","age":35},{"dni":"aaaaa0000","name":"Franklin","age":35}]}
+{
+  "users":[
+    {"userDni":"aaaaa0000","userName":"Franklin","userAge":35}
+  ]
+}
