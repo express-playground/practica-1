@@ -7,6 +7,7 @@ const express = require('express')
 // INIT
 // ==========================================
 const app = express()
+const routes = require('./routes')
 
 // ==========================================
 // SETTINGS
@@ -24,10 +25,11 @@ app.set('port', 4500)
 // ==========================================
 // ROUTES
 // ==========================================
+app.use('/users', routes.userRoutes)
 
 // ==========================================
 // LISTENER
 // ==========================================
 app.listen(app.get('port'), () => {
-    console.log('Server on port: ', app.get('port'))
+  console.log('Server on port: ', app.get('port'))
 })
