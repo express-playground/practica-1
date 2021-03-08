@@ -2,6 +2,7 @@
 // REQUIRES
 // ==========================================
 const express = require('express')
+const userController = require('../controllers/users')
 
 // ==========================================
 // INIT
@@ -12,8 +13,6 @@ const users = express.Router()
 // ==========================================
 // APIS
 // ==========================================
-users.get('/', (req, res) => {
-  res.send('Hello users')
-})
+users.get('/', userController.get)
 
 module.exports = users
