@@ -1,21 +1,29 @@
 const usersFakeRepository = require('../users.json')
 const fakeRepository = require('../utils/fakeRepository')
+const validators = require('../utils/validators')
 
 const readUsers = (req, res) => {
   res.send(usersFakeRepository)
 }
 
 const createUser = (req, res) => {
-  const userName = req.body.name
-  const userAge = req.body.age
-  const userDni = req.body.dni
+  const userName = req.body.userName
+  const userAge = req.body.userAge
+  const userDni = req.body.userDni
+
+  if (!validators.isDniWellFormated(userDni)) {
+    return res.send('DNI no válido')
+  }
+
+  if (validators.existUser(userDni)) {
+    return res.send('El usuario ya existe')
+  }
 
   usersFakeRepository.users.push({
     userDni,
     userName,
     userAge,
   })
-
   fakeRepository.saveUsersToFakeRepository(usersFakeRepository)
   res.send(usersFakeRepository)
 }
@@ -23,36 +31,44 @@ const createUser = (req, res) => {
 const readUser = (req, res) => {
   const userDni = req.params.dni
 
-  const chosenUser = usersFakeRepository.users.find(element => element.dni === userDni)
-  res.send(chosenUser)
+  const chosenUser = usersFakeRepository.users.find(element => element.userDni === userDni)
+  res.send(chosenUser ?? 'Usuario no encontrado')
 }
 
 const updateUser = (req, res) => {
-  const userDni = req.params.id
+  const userDni = req.params.dni
 
-  const userNewName = req.body.name
-  const userName = req.body.name
-  const userAge = req.body.age
+  const userName = req.body.userName
+  const userAge = req.body.userAge
+  const userNewDni = req.body?.userDni
 
-  const idx = usersFakeRepository.users.findIndex(element => element.dni === userDni)
+  if (userNewDni && !validators.isDniWellFormated(userDni)) {
+    return res.send('DNI nuevo no válido')
+  }
 
-  idx.name = userName
-  idx.age = userAge
-  idx.userDni = userNewName
+  const idx = usersFakeRepository.users.findIndex(element => element.userDni === userDni)
+
+  if (idx < 0) {
+    return res.send('DNI no encontrado')
+  }
+
+  usersFakeRepository.users[idx].userDni = userNewDni ?? userDni
+  usersFakeRepository.users[idx].userAge = userAge
+  usersFakeRepository.users[idx].userName = userName
 
   fakeRepository.saveUsersToFakeRepository(usersFakeRepository)
   res.send(usersFakeRepository)
 }
 
 const deleteUser = (req, res) => {
-  const userDni = req.params.id
-
-  const idx = usersFakeRepository.users.findIndex(element => element.dni === userDni)
-
-  if (idx >= 0) {
-    usersFakeRepository.users.splice(idx, 1)
-    fakeRepository.saveUsersToFakeRepository(usersFakeRepository)
+  const userDni = req.params.dni
+  const idx = usersFakeRepository.users.findIndex(element => element.userDni === userDni)
+  if (idx < 0) {
+    return res.send('DNI no encontrado')
   }
+
+  usersFakeRepository.users.splice(idx, 1)
+  fakeRepository.saveUsersToFakeRepository(usersFakeRepository)
 
   res.send(usersFakeRepository)
 }
